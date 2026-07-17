@@ -55,7 +55,8 @@ async function main() {
   const diff = diffRegistries(before, after);
   if (!diff.added.length && !diff.removed.length && !diff.changed.length) return console.log('No public config changes to notify.');
   if (!webhook) throw new Error('DISCORD_WEBHOOK_URL is required when worlds.json changes');
-  const commitUrl = process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && process.env.GITHUB_SHA ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/commit/${process.env.GITHUB_SHA}` : undefined;
+  const commitSha = process.env.UPDATED_COMMIT || process.env.GITHUB_SHA;
+  const commitUrl = process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY && commitSha ? `${process.env.GITHUB_SERVER_URL}/${process.env.GITHUB_REPOSITORY}/commit/${commitSha}` : undefined;
   await sendDiscordMessage(webhook, formatDiscordMessage(diff, commitUrl));
   console.log('Discord notification sent.');
 }

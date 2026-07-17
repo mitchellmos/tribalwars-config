@@ -93,5 +93,5 @@ jobs:
         if: env.CONFIG_CHANGED == 'true'
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          GITHUB_SHA: ${{ env.UPDATED_COMMIT }}
+          UPDATED_COMMIT: ${{ env.UPDATED_COMMIT }}
         run: npm run notify -- "${RUNNER_TEMP}/worlds-before.json" worlds.json
