@@ -1,0 +1,22 @@
+{
+  "name": "tribalwars-config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Canonical, automatically maintained Tribal Wars world registry",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test",
+    "update": "node src/update-worlds.mjs",
+    "preview": "node src/update-worlds.mjs --dry-run --print",
+    "validate": "node src/validate-worlds.mjs",
+    "notify": "node src/notify-discord.mjs",
+    "notify:test": "node src/notify-discord.mjs --test"
+  },
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "luxon": "^3.7.2"
+  }
+}

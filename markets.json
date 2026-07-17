@@ -1,0 +1,17 @@
+{
+  "markets": [
+    {
+      "id": "en",
+      "name": "International",
+      "hostnameSuffix": "tribalwars.net",
+      "worldIdPattern": "^en(?:[0-9]+|c[0-9]+|p[0-9]+)$",
+      "pageLocale": "en-dk",
+      "timeZone": "Europe/London",
+      "dateLocale": "en-GB",
+      "startDateLabel": "Start date",
+      "startDateFormat": "MMM dd,yyyy HH:mm",
+      "selectWorldLabel": "Select world",
+      "selectorUrl": "https://en156.tribalwars.net/en-dk/page/settings"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "defaultDurationDays": 1,
+  "removalGraceHours": 72,
+  "minimumDiscoveredWorlds": 2,
+  "maximumWorldChangesPerRun": 10,
+  "requestTimeoutMs": 15000,
+  "requestRetries": 2
+}

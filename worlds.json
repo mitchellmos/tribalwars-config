@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "defaultDurationDays": 1,
+  "worlds": [
+    {
+      "id": "en153",
+      "name": "World 153",
+      "url": "https://en153.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-01-08T10:00:00Z"
+    },
+    {
+      "id": "en154",
+      "name": "World 154",
+      "url": "https://en154.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-02-19T10:00:00Z"
+    },
+    {
+      "id": "en155",
+      "name": "World 155",
+      "url": "https://en155.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-04-23T09:00:00Z"
+    },
+    {
+      "id": "en156",
+      "name": "World 156",
+      "url": "https://en156.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-06-17T09:00:00Z"
+    },
+    {
+      "id": "enc1",
+      "name": "Classic",
+      "url": "https://enc1.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-05-06T09:00:00Z"
+    },
+    {
+      "id": "enc2",
+      "name": "High Performance",
+      "url": "https://enc2.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-05-19T10:00:00Z"
+    },
+    {
+      "id": "enp17",
+      "name": "Casual 17",
+      "url": "https://enp17.tribalwars.net",
+      "market": "en",
+      "startsAt": "2025-01-13T10:00:00Z"
+    },
+    {
+      "id": "enp18",
+      "name": "Casual 18",
+      "url": "https://enp18.tribalwars.net",
+      "market": "en",
+      "startsAt": "2025-09-06T10:00:00Z"
+    },
+    {
+      "id": "enp19",
+      "name": "Casual 19",
+      "url": "https://enp19.tribalwars.net",
+      "market": "en",
+      "startsAt": "2026-04-30T09:00:00Z"
+    }
+  ]
+}

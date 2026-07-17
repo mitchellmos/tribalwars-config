@@ -1,0 +1,77 @@
+name: Update world registry
+
+on:
+  schedule:
+    - cron: "45 2 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: update-world-registry
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Preserve current public config
+        run: cp worlds.json "${RUNNER_TEMP}/worlds-before.json"
+
+      - name: Update world registry
+        run: npm run update
+
+      - name: Validate updated registry
+        run: npm run validate
+
+      - name: Commit and push changes
+        env:
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+        run: |
+          git add worlds.json .state/missing-worlds.json
+
+          if git diff --cached --quiet; then
+            echo "World registry is already up to date."
+            echo "CONFIG_CHANGED=false" >> "${GITHUB_ENV}"
+            exit 0
+          fi
+
+          if git diff --cached --quiet -- worlds.json; then
+            echo "CONFIG_CHANGED=false" >> "${GITHUB_ENV}"
+          else
+            echo "CONFIG_CHANGED=true" >> "${GITHUB_ENV}"
+          fi
+
+          git config user.name "${GIT_AUTHOR_NAME}"
+          git config user.email "${GIT_AUTHOR_EMAIL}"
+          git commit -m "chore: update world registry"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "UPDATED_COMMIT=$(git rev-parse HEAD)" >> "${GITHUB_ENV}"
+
+      - name: Notify Discord
+        if: env.CONFIG_CHANGED == 'true'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          GITHUB_SHA: ${{ env.UPDATED_COMMIT }}
+        run: npm run notify -- "${RUNNER_TEMP}/worlds-before.json" worlds.json
