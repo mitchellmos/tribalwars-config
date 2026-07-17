@@ -15,7 +15,7 @@ The updater reads each configured market's public world selector and settings pa
 - Commits only when the public config or removal state changes.
 - Sends a Discord notification when `worlds.json` changes.
 
-The workflow runs daily at 02:45 UTC and can also be started manually.
+The workflow runs daily at 22:00 Dutch time (`Europe/Amsterdam`, including CET/CEST daylight-saving changes) and can also be started manually.
 
 ## Published config
 

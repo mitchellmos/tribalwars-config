@@ -55,7 +55,7 @@ Only `worlds.json` is consumed by other repositories. Policy, overrides, and mis
 
 ### 4. Automation
 
-- Run daily at 02:45 UTC, before map generation at 03:10 UTC.
+- Run daily at 22:00 Dutch time (`Europe/Amsterdam`), including CET/CEST daylight-saving changes.
 - Support manual `workflow_dispatch` runs.
 - Test and validate before updating.
 - Commit only changed registry or state files.
