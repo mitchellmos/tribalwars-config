@@ -115,6 +115,14 @@
       "startsAt": "2026-03-16T14:30:00Z"
     },
     {
+      "id": "usc5",
+      "name": "Special",
+      "url": "https://usc5.tribalwars.us",
+      "market": "us",
+      "category": "special",
+      "startsAt": "2026-07-23T13:30:00Z"
+    },
+    {
       "id": "usp14",
       "name": "Casual 14",
       "url": "https://usp14.tribalwars.us",
