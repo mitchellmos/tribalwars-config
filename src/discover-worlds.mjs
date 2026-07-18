@@ -4,6 +4,10 @@ import { resolveMarket } from './validate-worlds.mjs';
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+export function settingsPageUrl(worldUrl, market) {
+  return `${worldUrl}${market.pageLocale ? `/${market.pageLocale}` : ''}/page/settings`;
+}
+
 export function categoryFromWorldId(id, marketId) {
   const marketSuffix = id.slice(marketId.length);
   if (/^p[0-9]+$/.test(marketSuffix)) return 'casual';
@@ -54,7 +58,7 @@ export function parseWorldSelector(html, markets) {
 export function parseSettingsPage(html, world, market) {
   const $ = cheerio.load(html);
   const canonical = $('link[rel="canonical"]').attr('href');
-  const expected = `${world.url}/${market.pageLocale}/page/settings`;
+  const expected = settingsPageUrl(world.url, market);
   if (canonical !== expected) throw new Error(`Settings page canonical URL did not match ${world.id}`);
   let rawStart;
   $('table.data-table tr').each((_, row) => {
@@ -70,7 +74,7 @@ export function parseSettingsPage(html, world, market) {
 export async function discoverWorlds({ markets, policy, currentRegistry = { worlds: [] }, fetchImpl }) {
   const discovered = [];
   for (const market of markets.filter(item => item.enabled !== false)) {
-    const fallbackUrls = currentRegistry.worlds.filter(world => world.market === market.id).map(world => `${world.url}/${market.pageLocale}/page/settings`);
+    const fallbackUrls = currentRegistry.worlds.filter(world => world.market === market.id).map(world => settingsPageUrl(world.url, market));
     const selectorUrls = [...new Set([market.selectorUrl, ...fallbackUrls])];
     let selectorHtml;
     let selectorSourceUrl;
@@ -85,7 +89,7 @@ export async function discoverWorlds({ markets, policy, currentRegistry = { worl
     if (!selectorHtml) throw new Error(`Unable to read a valid world selector for market ${market.id}`, { cause: lastError });
     const candidates = parseWorldSelector(selectorHtml, [market]);
     for (const candidate of candidates) {
-      const settingsUrl = `${candidate.url}/${market.pageLocale}/page/settings`;
+      const settingsUrl = settingsPageUrl(candidate.url, market);
       const settingsHtml = settingsUrl === selectorSourceUrl ? selectorHtml : await fetchPage(settingsUrl, { timeoutMs: policy.requestTimeoutMs, retries: policy.requestRetries, fetchImpl });
       discovered.push(parseSettingsPage(settingsHtml, candidate, market));
     }

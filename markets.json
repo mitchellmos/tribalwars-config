@@ -13,6 +13,19 @@
       "startDateFormat": "MMM dd,yyyy HH:mm",
       "selectWorldLabel": "Select world",
       "selectorUrl": "https://en156.tribalwars.net/en-dk/page/settings"
+    },
+    {
+      "id": "us",
+      "name": "United States",
+      "hostnameSuffix": "tribalwars.us",
+      "worldIdPattern": "^us(?:[0-9]+|c[0-9]+|p[0-9]+)$",
+      "pageLocale": "",
+      "timeZone": "America/New_York",
+      "dateLocale": "en-US",
+      "startDateLabel": "Start date",
+      "startDateFormat": "MMM dd,yyyy HH:mm",
+      "selectWorldLabel": "Select world",
+      "selectorUrl": "https://us87.tribalwars.us/page/settings"
     }
   ]
 }

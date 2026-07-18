@@ -19,6 +19,9 @@ test('requires markets schema version 1 and accepts an optional boolean enabled 
   assert.throws(() => validateMarkets({...marketDocument(),schemaVersion:2}), /schemaVersion must equal 1/);
   assert.throws(() => validateMarkets(marketDocument('no')), /enabled must be a boolean/);
 });
+test('permits an empty page locale for markets whose settings URL has none', () => {
+  assert.doesNotThrow(() => validateMarkets({ schemaVersion:1, markets:[{ ...marketDocument().markets[0], pageLocale:'' }] }));
+});
 test('rejects invalid timezone-less startsAt', () => assert.throws(() => validateRegistry(registry([{...world(153),startsAt:'2026-01-08 10:00'}]), markets), /UTC ISO/));
 test('rejects mismatched market URLs and unsorted worlds', () => {
   assert.throws(() => validateRegistry(registry([{...world(153),url:'https://en153.example.com'}]), markets), /does not match/);

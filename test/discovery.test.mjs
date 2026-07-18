@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { categoryFromWorldId, discoverWorlds, fetchPage, parseSettingsPage, parseWorldSelector } from '../src/discover-worlds.mjs';
+import { categoryFromWorldId, discoverWorlds, fetchPage, parseSettingsPage, parseWorldSelector, settingsPageUrl } from '../src/discover-worlds.mjs';
 
 const market = { id:'en', hostnameSuffix:'tribalwars.net', worldIdPattern:'^en(?:[0-9]+|c[0-9]+|p[0-9]+)$', pageLocale:'en-dk', timeZone:'Europe/London', dateLocale:'en-GB', startDateLabel:'Start date', startDateFormat:'MMM dd,yyyy HH:mm', selectWorldLabel:'Select world', selectorUrl:'https://en156.tribalwars.net/en-dk/page/settings' };
 const selector = `<div class="content-selector"><h3>Select world</h3><a href="https://ens1.tribalwars.net/en-dk/page/stats">Speed</a><a href="https://en155.tribalwars.net/en-dk/page/stats">World 155</a><a href="https://en156.tribalwars.net/en-dk/page/stats">World 156</a><a href="https://enc1.tribalwars.net/en-dk/page/stats">Classic</a><a href="https://enp19.tribalwars.net/en-dk/page/stats">Casual 19</a></div>`;
@@ -19,6 +19,14 @@ test('assigns categories from stable world ID conventions instead of localized l
   assert.equal(categoryFromWorldId('en156','en'),'regular');
   assert.equal(categoryFromWorldId('enc2','en'),'special');
   assert.equal(categoryFromWorldId('enp19','en'),'casual');
+});
+
+test('supports markets whose settings URLs have no locale segment', () => {
+  const usMarket = { ...market, id:'us', hostnameSuffix:'tribalwars.us', pageLocale:'' };
+  const world = { id:'us87', url:'https://us87.tribalwars.us' };
+  assert.equal(settingsPageUrl(world.url, usMarket), 'https://us87.tribalwars.us/page/settings');
+  const html = `<link rel="canonical" href="https://us87.tribalwars.us/page/settings"><table class="data-table"><tr><td>Start date</td><td>Jun 17,2026 09:30</td></tr></table>`;
+  assert.equal(parseSettingsPage(html, world, { ...usMarket, timeZone:'America/New_York', dateLocale:'en-US' }).startsAt, '2026-06-17T13:30:00Z');
 });
 
 test('normalizes winter and summer UK dates to UTC', () => {

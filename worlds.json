@@ -73,6 +73,70 @@
       "market": "en",
       "category": "casual",
       "startsAt": "2026-04-30T09:00:00Z"
+    },
+    {
+      "id": "us84",
+      "name": "World 84",
+      "url": "https://us84.tribalwars.us",
+      "market": "us",
+      "category": "regular",
+      "startsAt": "2026-01-08T13:30:00Z"
+    },
+    {
+      "id": "us85",
+      "name": "World 85",
+      "url": "https://us85.tribalwars.us",
+      "market": "us",
+      "category": "regular",
+      "startsAt": "2026-02-19T13:30:00Z"
+    },
+    {
+      "id": "us86",
+      "name": "World 86",
+      "url": "https://us86.tribalwars.us",
+      "market": "us",
+      "category": "regular",
+      "startsAt": "2026-04-23T13:30:00Z"
+    },
+    {
+      "id": "us87",
+      "name": "World 87",
+      "url": "https://us87.tribalwars.us",
+      "market": "us",
+      "category": "regular",
+      "startsAt": "2026-06-17T13:30:00Z"
+    },
+    {
+      "id": "usc4",
+      "name": "Classic",
+      "url": "https://usc4.tribalwars.us",
+      "market": "us",
+      "category": "special",
+      "startsAt": "2026-03-16T14:30:00Z"
+    },
+    {
+      "id": "usp14",
+      "name": "Casual 14",
+      "url": "https://usp14.tribalwars.us",
+      "market": "us",
+      "category": "casual",
+      "startsAt": "2025-03-20T19:00:00Z"
+    },
+    {
+      "id": "usp15",
+      "name": "Casual 15",
+      "url": "https://usp15.tribalwars.us",
+      "market": "us",
+      "category": "casual",
+      "startsAt": "2025-09-13T14:37:00Z"
+    },
+    {
+      "id": "usp16",
+      "name": "Casual 16",
+      "url": "https://usp16.tribalwars.us",
+      "market": "us",
+      "category": "casual",
+      "startsAt": "2025-12-10T08:52:00Z"
     }
   ]
 }

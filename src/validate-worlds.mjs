@@ -36,9 +36,10 @@ export function validateMarkets(document) {
     const label = `markets.json.markets[${index}]`;
     object(market, label);
     keys(market, ['id','name','hostnameSuffix','worldIdPattern','pageLocale','timeZone','dateLocale','startDateLabel','startDateFormat','selectWorldLabel','selectorUrl','enabled'], label);
-    for (const field of ['id','name','hostnameSuffix','worldIdPattern','pageLocale','timeZone','dateLocale','startDateLabel','startDateFormat','selectWorldLabel','selectorUrl']) {
+    for (const field of ['id','name','hostnameSuffix','worldIdPattern','timeZone','dateLocale','startDateLabel','startDateFormat','selectWorldLabel','selectorUrl']) {
       if (typeof market[field] !== 'string' || !market[field]) throw new Error(`${label}.${field} must be a non-empty string`);
     }
+    if (typeof market.pageLocale !== 'string') throw new Error(`${label}.pageLocale must be a string`);
     if (!MARKET_ID.test(market.id)) throw new Error(`${label}.id is invalid`);
     if ('enabled' in market && typeof market.enabled !== 'boolean') throw new Error(`${label}.enabled must be a boolean`);
     if (ids.has(market.id)) throw new Error(`Duplicate market ${market.id}`);

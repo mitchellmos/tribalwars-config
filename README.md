@@ -88,7 +88,7 @@ npm run update
 | `.state/missing-worlds.json` | Internal first-observed-absence timestamps |
 | `schema/worlds.schema.json` | Public config schema |
 
-International `.tribalwars.net` worlds use `Europe/London`, which handles GMT and BST automatically. Additional markets can be added to `markets.json` with their own hostname suffix, page locale, localized labels, date format, and IANA timezone.
+International `.tribalwars.net` worlds use `Europe/London`, which handles GMT and BST automatically. Additional markets can be added to `markets.json` with their own hostname suffix, optional page-locale path segment, localized labels, date format, and IANA timezone.
 
 `markets.json` has its own `schemaVersion`, which must be `1`. A market can set `enabled` to `false` to skip automatic discovery and omit its worlds from publication while it is not ready to appear on the website; omitted `enabled` values default to enabled.
 
