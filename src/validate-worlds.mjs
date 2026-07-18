@@ -4,6 +4,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const WORLD_ID = /^[a-z][a-z0-9]*[0-9]+$/;
 const MARKET_ID = /^[a-z][a-z0-9-]*$/;
+const WORLD_CATEGORIES = new Set(['regular', 'casual', 'special']);
 
 function object(value, label) {
   if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(`${label} must be an object`);
@@ -27,17 +28,19 @@ export const compareWorlds = (a, b) => a.market.localeCompare(b.market) || world
 
 export function validateMarkets(document) {
   object(document, 'markets.json');
-  keys(document, ['markets'], 'markets.json');
+  keys(document, ['schemaVersion','markets'], 'markets.json');
+  if (document.schemaVersion !== 1) throw new Error('markets.json.schemaVersion must equal 1');
   if (!Array.isArray(document.markets) || !document.markets.length) throw new Error('markets.json.markets must be a non-empty array');
   const ids = new Set();
   for (const [index, market] of document.markets.entries()) {
     const label = `markets.json.markets[${index}]`;
     object(market, label);
-    keys(market, ['id','name','hostnameSuffix','worldIdPattern','pageLocale','timeZone','dateLocale','startDateLabel','startDateFormat','selectWorldLabel','selectorUrl'], label);
+    keys(market, ['id','name','hostnameSuffix','worldIdPattern','pageLocale','timeZone','dateLocale','startDateLabel','startDateFormat','selectWorldLabel','selectorUrl','enabled'], label);
     for (const field of ['id','name','hostnameSuffix','worldIdPattern','pageLocale','timeZone','dateLocale','startDateLabel','startDateFormat','selectWorldLabel','selectorUrl']) {
       if (typeof market[field] !== 'string' || !market[field]) throw new Error(`${label}.${field} must be a non-empty string`);
     }
     if (!MARKET_ID.test(market.id)) throw new Error(`${label}.id is invalid`);
+    if ('enabled' in market && typeof market.enabled !== 'boolean') throw new Error(`${label}.enabled must be a boolean`);
     if (ids.has(market.id)) throw new Error(`Duplicate market ${market.id}`);
     ids.add(market.id);
     new RegExp(market.worldIdPattern);
@@ -54,12 +57,13 @@ export function resolveMarket(hostname, markets) {
 
 export function validateWorld(world, markets, label = 'world') {
   object(world, label);
-  keys(world, ['id','name','url','market','startsAt','durationDays'], label);
-  for (const field of ['id','name','url','market','startsAt']) if (!(field in world)) throw new Error(`${label} is missing ${field}`);
+  keys(world, ['id','name','url','market','category','startsAt','durationDays'], label);
+  for (const field of ['id','name','url','market','category','startsAt']) if (!(field in world)) throw new Error(`${label} is missing ${field}`);
   if (!WORLD_ID.test(world.id)) throw new Error(`${label}.id is invalid`);
   if (typeof world.name !== 'string' || !world.name.trim()) throw new Error(`${label}.name is invalid`);
   const market = markets.find(item => item.id === world.market);
   if (!market) throw new Error(`${label}.market is unknown`);
+  if (!WORLD_CATEGORIES.has(world.category)) throw new Error(`${label}.category must be regular, casual, or special`);
   if (!new RegExp(market.worldIdPattern).test(world.id)) throw new Error(`${label}.id does not match market ${market.id}`);
   const url = new URL(world.url);
   if (url.protocol !== 'https:' || url.hostname !== `${world.id}.${market.hostnameSuffix}` || url.pathname !== '/' || url.search || url.hash) {

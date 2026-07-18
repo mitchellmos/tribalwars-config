@@ -4,6 +4,13 @@ import { resolveMarket } from './validate-worlds.mjs';
 
 const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
+export function categoryFromWorldId(id, marketId) {
+  const marketSuffix = id.slice(marketId.length);
+  if (/^p[0-9]+$/.test(marketSuffix)) return 'casual';
+  if (/^c[0-9]+$/.test(marketSuffix)) return 'special';
+  return 'regular';
+}
+
 export async function fetchPage(url, { timeoutMs = 15000, retries = 2, fetchImpl = globalThis.fetch, retryDelayMs = 250 } = {}) {
   let cause;
   for (let attempt = 0; attempt <= retries; attempt += 1) {
@@ -37,7 +44,7 @@ export function parseWorldSelector(html, markets) {
       if (!market) return;
       const id = url.hostname.slice(0, -(market.hostnameSuffix.length + 1));
       if (!new RegExp(market.worldIdPattern).test(id)) return;
-      worlds.set(id, { id, name: $(anchor).text().trim(), url: `https://${url.hostname}`, market: market.id });
+      worlds.set(id, { id, name: $(anchor).text().trim(), url: `https://${url.hostname}`, market: market.id, category: categoryFromWorldId(id, market.id) });
     });
   });
   if (!worlds.size) throw new Error('No supported worlds found in the public world selector');
@@ -62,7 +69,7 @@ export function parseSettingsPage(html, world, market) {
 
 export async function discoverWorlds({ markets, policy, currentRegistry = { worlds: [] }, fetchImpl }) {
   const discovered = [];
-  for (const market of markets) {
+  for (const market of markets.filter(item => item.enabled !== false)) {
     const fallbackUrls = currentRegistry.worlds.filter(world => world.market === market.id).map(world => `${world.url}/${market.pageLocale}/page/settings`);
     const selectorUrls = [...new Set([market.selectorUrl, ...fallbackUrls])];
     let selectorHtml;

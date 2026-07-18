@@ -29,6 +29,7 @@
           "name",
           "url",
           "market",
+          "category",
           "startsAt"
         ],
         "properties": {
@@ -47,6 +48,14 @@
           "market": {
             "type": "string",
             "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "regular",
+              "casual",
+              "special"
+            ]
           },
           "startsAt": {
             "type": "string",

@@ -16,7 +16,7 @@ export function formatDiscordMessage(diff, commitUrl) {
   for (const world of diff.added) lines.push(`➕ ${world.name} (${world.id}) — starts ${world.startsAt}`);
   for (const world of diff.removed) lines.push(`➖ ${world.name} (${world.id})`);
   for (const change of diff.changed) {
-    const fields = ['name','url','market','startsAt','durationDays'].filter(field => change.before[field] !== change.after[field]);
+    const fields = ['name','url','market','category','startsAt','durationDays'].filter(field => change.before[field] !== change.after[field]);
     const details = fields.map(field => `${field}: ${change.before[field] ?? 'default'} → ${change.after[field] ?? 'default'}`).join('; ');
     lines.push(`✏️ ${change.after.name} (${change.after.id}) — ${details}`);
   }

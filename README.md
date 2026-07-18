@@ -37,13 +37,14 @@ Example:
       "name": "World 156",
       "url": "https://en156.tribalwars.net",
       "market": "en",
+      "category": "regular",
       "startsAt": "2026-06-17T09:00:00Z"
     }
   ]
 }
 ```
 
-`startsAt` is always an absolute UTC ISO 8601 timestamp. A world may optionally provide `durationDays`; otherwise consumers use `defaultDurationDays`.
+`category` is always `regular`, `casual`, or `special`. `startsAt` is always an absolute UTC ISO 8601 timestamp. A world may optionally provide `durationDays`; otherwise consumers use `defaultDurationDays`.
 
 ## Required setup
 
@@ -81,7 +82,7 @@ npm run update
 | File | Purpose |
 |---|---|
 | `worlds.json` | Published source of truth consumed by other repositories |
-| `markets.json` | Market hostname, locale, date format, timezone, and inclusion rules |
+| `markets.json` | Versioned market hostname, locale, date format, timezone, and inclusion rules |
 | `policy.json` | Update thresholds, retries, default duration, and removal grace period |
 | `overrides.json` | Manual include, exclude, and per-world duration exceptions |
 | `.state/missing-worlds.json` | Internal first-observed-absence timestamps |
@@ -89,15 +90,18 @@ npm run update
 
 International `.tribalwars.net` worlds use `Europe/London`, which handles GMT and BST automatically. Additional markets can be added to `markets.json` with their own hostname suffix, page locale, localized labels, date format, and IANA timezone.
 
+`markets.json` has its own `schemaVersion`, which must be `1`. A market can set `enabled` to `false` to skip automatic discovery and omit its worlds from publication while it is not ready to appear on the website; omitted `enabled` values default to enabled.
+
 ## Consumer requirements
 
 Consumers should:
 
 1. Fetch and validate the config during build or deployment.
 2. Reject unsupported `schemaVersion` values.
-3. Skip map generation while `startsAt` is later than the current UTC time.
-4. Use `durationDays` or fall back to `defaultDurationDays`.
-5. Keep the previously deployed output if the config cannot be downloaded or validated.
+3. Use the explicit per-world `category` rather than inferring it from IDs or localized names.
+4. Skip map generation while `startsAt` is later than the current UTC time.
+5. Use `durationDays` or fall back to `defaultDurationDays`.
+6. Keep the previously deployed output if the config cannot be downloaded or validated.
 
 Integration changes for `tribalwars-map` and `maps-website` are handled in those repositories.
 

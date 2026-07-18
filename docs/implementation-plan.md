@@ -29,7 +29,7 @@ Only `worlds.json` is consumed by other repositories. Policy, overrides, and mis
 ### 1. Contract and policy
 
 - Define schema version 1.
-- Store world ID, display name, HTTPS URL, market, UTC start time, and optional duration override.
+- Store world ID, display name, HTTPS URL, market, explicit category, UTC start time, and optional duration override.
 - Keep the default map duration at registry level.
 - Sort worlds numerically and reject duplicate IDs.
 - Separate discovery policy from published configuration.
@@ -39,6 +39,7 @@ Only `worlds.json` is consumed by other repositories. Policy, overrides, and mis
 - Read each market's public world selector and settings pages.
 - Include standard, classic/special, and casual worlds while excluding speed servers.
 - Match hostnames to data-driven market definitions using the longest hostname suffix.
+- Publish `regular`, `casual`, or `special` on every world instead of making consumers interpret IDs or localized labels.
 - Parse localized start dates with each market's locale, format, and IANA timezone, then publish UTC.
 - Apply manual include, exclude, and duration overrides.
 - Produce stable JSON with no timestamp-only changes.

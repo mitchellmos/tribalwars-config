@@ -9,12 +9,13 @@ const changedWorldCount = (before, after) => {
 export function reconcileWorlds({ discoveredWorlds, currentRegistry, markets, policy, overrides, state, now = new Date() }) {
   if (discoveredWorlds.length < policy.minimumDiscoveredWorlds) throw new Error(`Discovered ${discoveredWorlds.length} worlds, below safety minimum ${policy.minimumDiscoveredWorlds}`);
   const excluded = new Set(overrides.exclude);
-  const next = new Map(discoveredWorlds.filter(world => !excluded.has(world.id)).map(world => [world.id, { ...world }]));
-  for (const world of overrides.include) next.set(world.id, { ...world });
+  const enabledMarkets = new Set(markets.filter(market => market.enabled !== false).map(market => market.id));
+  const next = new Map(discoveredWorlds.filter(world => enabledMarkets.has(world.market) && !excluded.has(world.id)).map(world => [world.id, { ...world }]));
+  for (const world of overrides.include) if (enabledMarkets.has(world.market)) next.set(world.id, { ...world });
   const missingWorlds = {};
   const graceMs = policy.removalGraceHours * 3600000;
   for (const current of currentRegistry.worlds) {
-    if (excluded.has(current.id) || next.has(current.id)) continue;
+    if (!enabledMarkets.has(current.market) || excluded.has(current.id) || next.has(current.id)) continue;
     const observedAt = new Date(Math.floor(now.getTime() / 1000) * 1000).toISOString().replace('.000Z', 'Z');
     const firstMissingAt = state.missingWorlds[current.id] ?? observedAt;
     if (now.getTime() - Date.parse(firstMissingAt) < graceMs) {
