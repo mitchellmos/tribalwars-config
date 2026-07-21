@@ -51,6 +51,14 @@
       "startsAt": "2026-05-19T10:00:00Z"
     },
     {
+      "id": "enc5",
+      "name": "Summer Special",
+      "url": "https://enc5.tribalwars.net",
+      "market": "en",
+      "category": "special",
+      "startsAt": "2026-07-23T09:00:00Z"
+    },
+    {
       "id": "enp17",
       "name": "Casual 17",
       "url": "https://enp17.tribalwars.net",
@@ -73,22 +81,6 @@
       "market": "en",
       "category": "casual",
       "startsAt": "2026-04-30T09:00:00Z"
-    },
-    {
-      "id": "us84",
-      "name": "World 84",
-      "url": "https://us84.tribalwars.us",
-      "market": "us",
-      "category": "regular",
-      "startsAt": "2026-01-08T13:30:00Z"
-    },
-    {
-      "id": "us85",
-      "name": "World 85",
-      "url": "https://us85.tribalwars.us",
-      "market": "us",
-      "category": "regular",
-      "startsAt": "2026-02-19T13:30:00Z"
     },
     {
       "id": "us86",
