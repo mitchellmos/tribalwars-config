@@ -3,14 +3,6 @@
   "defaultDurationDays": 1,
   "worlds": [
     {
-      "id": "en153",
-      "name": "World 153",
-      "url": "https://en153.tribalwars.net",
-      "market": "en",
-      "category": "regular",
-      "startsAt": "2026-01-08T10:00:00Z"
-    },
-    {
       "id": "en154",
       "name": "World 154",
       "url": "https://en154.tribalwars.net",
