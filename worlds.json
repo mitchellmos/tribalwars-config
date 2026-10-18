@@ -35,12 +35,20 @@
       "startsAt": "2026-08-27T09:00:00Z"
     },
     {
+      "id": "en158",
+      "name": "World 158",
+      "url": "https://en158.tribalwars.net",
+      "market": "en",
+      "category": "regular",
+      "startsAt": "2026-10-09T09:00:00Z"
+    },
+    {
       "id": "enc1",
       "name": "Classic",
       "url": "https://enc1.tribalwars.net",
       "market": "en",
       "category": "special",
-      "startsAt": "2026-05-06T09:00:00Z"
+      "startsAt": "2026-09-22T09:00:00Z"
     },
     {
       "id": "enc2",
@@ -107,6 +115,14 @@
       "startsAt": "2026-08-27T13:30:00Z"
     },
     {
+      "id": "us89",
+      "name": "World 89",
+      "url": "https://us89.tribalwars.us",
+      "market": "us",
+      "category": "regular",
+      "startsAt": "2026-10-09T13:30:00Z"
+    },
+    {
       "id": "usc5",
       "name": "Special",
       "url": "https://usc5.tribalwars.us",
@@ -137,6 +153,14 @@
       "market": "us",
       "category": "casual",
       "startsAt": "2025-12-10T08:52:00Z"
+    },
+    {
+      "id": "usp17",
+      "name": "Casual 17",
+      "url": "https://usp17.tribalwars.us",
+      "market": "us",
+      "category": "casual",
+      "startsAt": "2026-08-27T15:00:00Z"
     }
   ]
 }
