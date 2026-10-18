@@ -56,7 +56,7 @@ Only `worlds.json` is consumed by other repositories. Policy, overrides, and mis
 
 ### 4. Automation
 
-- Run daily at 22:00 Dutch time (`Europe/Amsterdam`), including CET/CEST daylight-saving changes.
+- Schedule once daily at 20:00 UTC (21:00 CET / 22:00 CEST), without a time-of-day gate so delayed runs still proceed.
 - Support manual `workflow_dispatch` runs.
 - Test and validate before updating.
 - Commit only changed registry or state files.
