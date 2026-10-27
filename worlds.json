@@ -51,14 +51,6 @@
       "startsAt": "2026-09-22T09:00:00Z"
     },
     {
-      "id": "enc2",
-      "name": "High Performance",
-      "url": "https://enc2.tribalwars.net",
-      "market": "en",
-      "category": "special",
-      "startsAt": "2026-05-19T10:00:00Z"
-    },
-    {
       "id": "enc5",
       "name": "Summer Special",
       "url": "https://enc5.tribalwars.net",
