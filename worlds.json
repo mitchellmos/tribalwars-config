@@ -35,6 +35,14 @@
       "startsAt": "2026-10-09T09:00:00Z"
     },
     {
+      "id": "en159",
+      "name": "World 159",
+      "url": "https://en159.tribalwars.net",
+      "market": "en",
+      "category": "regular",
+      "startsAt": "2026-11-25T10:00:00Z"
+    },
+    {
       "id": "enc1",
       "name": "Classic",
       "url": "https://enc1.tribalwars.net",
